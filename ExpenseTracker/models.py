@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
@@ -10,8 +11,8 @@ class Profile(models.Model):
     prof_pic=models.ImageField(upload_to='pictures/',default='default.png')
     name=models.CharField(max_length=50)
     bio=models.TextField()
-    location=models.CharField(max_length=100)
-    account_url=models.URLField()
+    Savings = models.IntegerField( null=True, blank=True)
+    income = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -36,3 +37,24 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=search_term).all()
     def __str__(self):
         return f'{self.user.username} Profile'
+ADD_EXPENSE_CHOICES = [
+     ("Expense","Expense"),
+     ("Income","Income")
+ ]
+class category(models.Model):
+	name = models.CharField(max_length = 250)
+	def __str__(self):
+	  return self.name
+
+class Expense(models.Model):
+    user = models.ForeignKey(User,default = 1, on_delete=models.CASCADE)
+    add_money = models.CharField(max_length = 10 , choices = ADD_EXPENSE_CHOICES )
+    quantity = models.BigIntegerField()
+    Date = models.DateField(auto_now_add = True)
+
+    Category = models.ForeignKey(category, on_delete=models.CASCADE,blank=True)
+    def __str__(self):
+     return f'{self.user.username} Profile'
+#     class Meta:
+#         db_table:'expense'
+	
