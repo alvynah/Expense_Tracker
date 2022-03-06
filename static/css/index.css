@@ -127,6 +127,10 @@ table {
     border-radius: 5px;
 }
 
+.expenseBody {
+    margin-top: 5%;
+}
+
 #design {
     color: white;
     border: 3px solid #00C851!important;
