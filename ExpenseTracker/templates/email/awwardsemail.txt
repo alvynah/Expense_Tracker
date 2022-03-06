@@ -1,0 +1,5 @@
+Hello {{name}}
+
+Welcome to Expense Tracker.Track your money accurately for a great analysis.
+Have fun!!
+If this is not you please contact us immediately
