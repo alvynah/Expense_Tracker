@@ -80,12 +80,15 @@ def welcome(request):
    users = User.objects.exclude(id=request.user.id)
    profiles = Profile.objects.all()
    expenses = Expense.objects.all()
+   form = UpdateExpenseForm(request.POST)
+
    
 
    params = {
        'users': users,
        'profiles': profiles,
        'expenses':expenses,
+       'form':form,
       
    }
    return render(request, 'expense/index.html', params)
@@ -102,6 +105,47 @@ def addmoney_submission(request):
     else:
         form = UpdateExpenseForm()
     return render (request,'expense/expense.html', {'form':form})
+
+
+def edit_submission(request, id):
+    if request.method == "POST":
+        add = Expense.objects.get(id=id)
+
+        form = UpdateExpenseForm(request.POST, instance=add)
+        if form.is_valid():
+            add = Expense.objects.get(id=id)
+
+            expense = form.save(commit=False)
+            expense.user = request.user
+
+            expense.save()
+        
+        return redirect("welcome")
+    else:
+        form = UpdateExpenseForm()
+    return render (request,'expense/expense.html', {'form':form})
+
+
+def submission_detail(request, id):
+    expenses = Expense.objects.get(id=id)
+
+   
+
+    params = {
+        'expenses':expenses,
+       
+    }
+    return render(request, 'expense/details.html', params)
+
+
+def submission_delete(request, id):
+    expenses = Expense.objects.get(id=id)
+    if request.method == "POST":
+        expenses.delete()
+        return redirect('welcome')
+        
+    return redirect('welcome')
+
 
 @login_required
 def search_project(request):

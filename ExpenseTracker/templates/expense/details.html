@@ -1,0 +1,12 @@
+<div id="main">
+
+    {% extends 'expense/base.html' %}{%load crispy_forms_tags%} {% block content %}{{block.super}}
+    <div style="margin-top:5%">
+        <p>{{ expenses.add_money }}</p>
+        <p>{{ expenses.Category.name }}</p>
+        <p>{{ expenses.quantity }}</p>
+        <p>{{ expenses.Date|date }}</p>
+    </div>
+
+</div>
+{%endblock%}

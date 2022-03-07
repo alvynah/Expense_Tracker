@@ -11,7 +11,7 @@
         </div>
         <div class="uploadForm">
 
-            <form action="{% url 'addmoney_submission' %}" method="post" enctype="multipart/form-data" novalidate>
+            <form action="{% url 'addmoney_submission' %}" method="post" enctype="multipart/form-data" Validate>
                 {% csrf_token %} {{ form|crispy}}
                 <div class="text-center">
                     <button class="btn btn-sm btnUpload">Update Expense</button>

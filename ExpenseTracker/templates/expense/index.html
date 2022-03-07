@@ -1,35 +1,90 @@
 <div id="main">
 
     {% extends 'expense/base.html' %}{%load crispy_forms_tags%} {% block content %}{{block.super}}
-<div  style="margin-top:5%">
+    <div style="margin-top:5%" class="container">
         {% if expenses %}
-<table id = "table" class = "table table-bordered">
-        <thead class = "alert-success">
-            <tr>
-                <th>Type</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for post in expenses %}
-            <tr>
-                <td>{{ post.Add_name }}</td>
-                <td>{{ post.Category.name }}</td>
-                <td>{{ post.quantity }}</td>
-                <td>{{ post.Date|date }}</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-           {% endfor %}
-        </tbody>
-    </table>
+        <table id="table" class="table table-bordered">
+            <thead class="alert-success">
+                <tr>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in expenses %}
+                <tr>
+                    <td>{{ post.add_money }}</td>
+                    <td>{{ post.Category.name }}</td>
+                    <td>{{ post.quantity }}</td>
+                    <td>{{ post.Date|date }}</td>
+                    <td>
+                        <a class="btn btn-sm editProfile  mr-3" href="{% url 'submission_detail' post.id %}"><span
+                                style="color:black;"><strong>Details</strong></span></a>
+                        </a>
+                    </td>
+                    <td><a class="btn btn-sm editProfile  mr-3" data-toggle="modal" data-target=".bg-example-modal-md"><span
+                                style="color:black;"><strong>Edit</strong></span></a></td>
+                    <td>
+                        <a class="btn btn-sm editProfile  mr-3" data-toggle="modal" data-target=".bgd-example-modal-md"><span
+                                style="color:black;"><strong>Delete</strong></span></a>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-{%endif%}
+    {%endif%} {% for post in expenses %}
 
+    <div class="modal fade bg-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md ">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center "> Edit Transaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body updateForm">
+                    <form action="{% url 'edit_submission' post.id %}" method="post" validate enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
+                        {% csrf_token%} {{ form}}
+                        <button type="submit" class="btn btn-primary btn-sm"> Update Transaction</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bgd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md ">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center "> Delete Transaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body updateForm">
+                    <form method="POST" action="{% url 'submission_delete' post.id %}">
+                        <!-- Security token by Django -->
+                        {% csrf_token %} Are you want to delete this item ?
+                        <input type="submit" value="Yes" />
+                        <a href="/">Cancel </a>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {%endblock%}
