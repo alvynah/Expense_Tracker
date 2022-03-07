@@ -2,7 +2,25 @@
 
     {% extends 'expense/base.html' %}{%load crispy_forms_tags%} {% block content %}{{block.super}}
     <div style="margin-top:5%" class="container">
+
+
         {% if expenses %}
+        <div class="card">
+            <div class="card-header">
+                Total Income
+            </div>
+            <div class="card-body">
+                {{currencyIncome}}
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Total Expenses
+            </div>
+            <div class="card-body">
+                {{currencyExpense}}
+            </div>
+        </div>
         <table id="table" class="table table-bordered">
             <thead class="alert-success">
                 <tr>

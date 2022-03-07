@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import moneyed
 import os
 from pathlib import Path
 from decouple import config,Csv
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'ExpenseTracker',
     'bootstrap4',
     'crispy_forms',
+    'djmoney',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -163,4 +165,12 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 LOGIN_REDIRECT_URL = 'welcome'
+
+KSH = moneyed.add_currency(
+    code='KSH',
+    numeric='068',
+    name='Kenyan Shilling',
+    countries=('KENYA', )
+)
+CURRENCIES = ('USD', 'KSH')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

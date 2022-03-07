@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, authenticate
@@ -80,15 +81,22 @@ def welcome(request):
    users = User.objects.exclude(id=request.user.id)
    profiles = Profile.objects.all()
    expenses = Expense.objects.all()
+   expense_sum = Expense.objects.filter(add_money='Expense').aggregate(Sum('quantity')).get('quantity__sum')
+   income_sum = Expense.objects.filter(add_money='Income').aggregate(Sum('quantity')).get('quantity__sum')
+
    form = UpdateExpenseForm(request.POST)
 
-   
+   currencyIncome = "KSH {:,.2f}".format(income_sum)
+   currencyExpense = "KSH {:,.2f}".format(expense_sum)
+ 
 
    params = {
        'users': users,
        'profiles': profiles,
        'expenses':expenses,
        'form':form,
+       'currencyIncome': currencyIncome,
+       'currencyExpense': currencyExpense,
       
    }
    return render(request, 'expense/index.html', params)
