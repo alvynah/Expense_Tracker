@@ -37,7 +37,7 @@ def signup_view(request):
 
            login(request, user)
 
-           return redirect('welcome')
+           return redirect('addmoney_submission')
    else:
        form = SignUpForm()
    return render(request, 'registration/signup.html', {'form': form})

@@ -12,7 +12,7 @@ This is a Django web application.It is a simple Expense Tracker that illustrates
 
 ## Live Link
 
-[awwardsjet](https://awwardsjet.herokuapp.com/)
+[transactiont](https://transactiont.herokuapp.com/)
 
 ## User Story
 
