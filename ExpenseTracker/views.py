@@ -14,6 +14,7 @@ from django.core.paginator import Paginator, EmptyPage , PageNotAnInteger
 from django.db.models import Sum
 from django.http import JsonResponse
 import datetime
+from django.views.generic import TemplateView
 from django.utils import timezone
 
 # Create your views here.
@@ -223,3 +224,41 @@ def search_project(request):
         message = "You haven't searched for any Expense"
        return render(request, 'expense/search_results.html', {'message': message})
 
+
+class EditorChartView(TemplateView):
+    template_name = 'expense/pie_chart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["qs"] = Expense.objects.filter(user=self.user, add_money='Expense')
+        return context
+
+def pie_chartExpense(request):
+    labels = []
+    data = []
+
+    queryset = Expense.objects.filter(user = request.user, add_money='Expense')
+    expense_sum = queryset.aggregate(Sum('quantity')).get('quantity__sum')
+
+    for expense in queryset:
+        labels.append(expense.add_money)
+        data.append(expense_sum)
+
+    return render(request, 'expense/pie_chart.html', {
+        'labels': labels,
+        'data': data,
+    })
+    
+def pie_chartIncome(request):
+    labels1 = []
+    data1 = []
+
+    queryset = Expense.objects.filter(add_money='Income')
+    for expense in queryset:
+        labels1.append(expense.Category.name)
+        data1.append(expense.quantity)
+
+    return render(request, 'expense/index.html', {
+        'labels1': labels1,
+        'data1': data1,
+    })
