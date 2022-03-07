@@ -1,3 +1,4 @@
+from cProfile import label
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -26,3 +27,8 @@ class UpdateExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = ( 'add_money','Category',"quantity")
+        widgets = {
+            'add_money': forms.Select(attrs={'class': 'form-control'}),
+            'Category': forms.Select(attrs={'class': 'form-control'}),
+
+        }

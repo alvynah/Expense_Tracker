@@ -1,11 +1,15 @@
 <div id="main">
 
     {% extends 'expense/base.html' %}{%load crispy_forms_tags%} {% block content %}{{block.super}}
-    <div style="margin-top:5%">
-        <p>{{ expenses.add_money }}</p>
-        <p>{{ expenses.Category.name }}</p>
-        <p>{{ expenses.quantity }}</p>
-        <p>{{ expenses.Date|date }}</p>
+    <div style="margin-top:5%" class="container">
+        <p> Transaction Type -- {{ expenses.add_money }}</p>
+        <p> Category -- {{ expenses.Category.name }}</p>
+        <p> Amount -- {{ expenses.quantity }}</p>
+        <p>Updated on -- {{ expenses.Date|date }}</p>
+        <p>Updated by -- {{ expenses.user.username }}</p>
+        <a class="btn btn-sm editProfile btn-info  mr-3" href="{% url 'addmoney_submission'%}"><span
+                style="color:white;"><strong><i class="fa fa-arrow-left"></i> Back</strong></span></a>
+        </a>
     </div>
 
 </div>

@@ -36,10 +36,7 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
-    @classmethod
-    def search_profile(cls, search_term):
-        return cls.objects.filter(user__username__icontains=search_term).all()
-
+   
     def __str__(self):
         return f'{self.user.username} Profile'
 
@@ -56,6 +53,11 @@ class category(models.Model):
     def __str__(self):
         return self.name
 
+    def save_category(self):
+        self.save()
+
+    def delete_category(self):
+        self.delete()
 
 class Expense(models.Model):
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)

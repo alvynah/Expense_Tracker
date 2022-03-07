@@ -1,4 +1,5 @@
 from multiprocessing.sharedctypes import Value
+from tarfile import NUL
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, authenticate
@@ -80,14 +81,33 @@ def profile(request, username):
 def welcome(request):
    users = User.objects.exclude(id=request.user.id)
    profiles = Profile.objects.all()
-   expenses = Expense.objects.all()
-   expense_sum = Expense.objects.filter(add_money='Expense').aggregate(Sum('quantity')).get('quantity__sum')
-   income_sum = Expense.objects.filter(add_money='Income').aggregate(Sum('quantity')).get('quantity__sum')
+   current_user = request.user
+   expenses = Expense.objects.filter(user=current_user)
+   user_expense = Expense.objects.filter(add_money='Expense',user=current_user)
+   user_income = Expense.objects.filter(add_money='Income',user=current_user)
+   if(user_expense.count()>0):
+	
+        expense_sum = user_expense.aggregate(Sum('quantity')).get('quantity__sum')
+        currencyExpense = "KSH {:,.2f}".format(expense_sum)
+
+   else:
+       expense_sum=0
+       currencyExpense = "KSH {}".format(expense_sum)
+
+   if(user_income.count() > 0):
+
+        income_sum = user_income.aggregate(Sum('quantity')).get('quantity__sum')
+        currencyIncome = "KSH {:,.2f}".format(income_sum)
+
+   else:
+       income_sum = 0
+       currencyIncome = "KSH {}".format(income_sum)
+
 
    form = UpdateExpenseForm(request.POST)
 
-   currencyIncome = "KSH {:,.2f}".format(income_sum)
-   currencyExpense = "KSH {:,.2f}".format(expense_sum)
+  
+
  
 
    params = {
@@ -103,16 +123,51 @@ def welcome(request):
 
 @login_required
 def addmoney_submission(request):
+    current_user = request.user
+    expenses = Expense.objects.filter(user=current_user)
+    user_expense = Expense.objects.filter(add_money='Expense', user=current_user)
+    user_income = Expense.objects.filter(add_money='Income',user=current_user)
+    if(user_expense.count()>0):
+        
+        expense_sum = user_expense.aggregate(Sum('quantity')).get('quantity__sum')
+        currencyExpense = "KSH {:,.2f}".format(expense_sum)
+
+    else:
+        expense_sum=0
+        currencyExpense = "KSH {}".format(expense_sum)
+
+    if(user_income.count() > 0):
+
+        income_sum = user_income.aggregate(Sum('quantity')).get('quantity__sum')
+        currencyIncome = "KSH {:,.2f}".format(income_sum)
+
+    else:
+        income_sum = 0
+        currencyIncome = "KSH {}".format(income_sum)
+
+    totalusage = income_sum - expense_sum
+    currencyUsage = "KSH {}".format(totalusage)
+
+
+
+
     if request.method == 'POST':
         form = UpdateExpenseForm(request.POST)
         if form.is_valid():
            expense = form.save(commit=False)
            expense.user = request.user
            expense.save()
-           return redirect('welcome')
+           return redirect('addmoney_submission')
     else:
         form = UpdateExpenseForm()
-    return render (request,'expense/expense.html', {'form':form})
+    params ={
+        'expenses':expenses,
+        'form':form,
+        'currencyIncome': currencyIncome,
+        'currencyExpense': currencyExpense,
+        'currencyUsage': currencyUsage,
+    }
+    return render(request, 'expense/expense.html', params)
 
 
 def edit_submission(request, id):
@@ -150,16 +205,18 @@ def submission_delete(request, id):
     expenses = Expense.objects.get(id=id)
     if request.method == "POST":
         expenses.delete()
-        return redirect('welcome')
+        return redirect('addmoney_submission')
         
-    return redirect('welcome')
+    return redirect('addmoney_submission')
 
 
 @login_required
 def search_project(request):
        if 'search_project' in request.GET and request.GET["search_project"]:
          Category = request.GET.get("search_project")
-         searched_projects = Expense.search_expense(Category)
+
+ 
+         searched_projects = Expense.search_expense(Category).filter(user=request.user)
          message = f"{Category}"
          return render(request, 'expense/search_results.html', {'message':message,'results': searched_projects})
        else:

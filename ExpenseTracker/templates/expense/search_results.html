@@ -12,20 +12,27 @@
             <div class="searchCards">
                 {% for post in results %}
                 <div class="card mb-4" style="width: 30rem;padding:0;">
-                    
+
                     <div class="card-body">
                         <div>
-                            <span style="font: size 20px;font-weight:800;"><strong>Title: {{post.Add_name|title}}</strong></span>
-                           
+                            <span style=""><strong>Type: {{post.add_money|title}}</strong></span>
+
 
                         </div>
-                        <p class="text-center"> <strong>Description</strong>:<br>{{post.Category}}</p>
+                        <div>
+                            <span class=""> <strong>Category</strong>::{{post.Category}}</span>
+
+                        </div>
+                        <div>
+                            <span class=""> <strong>Amount</strong>::{{post.quantity}}</span>
+
+                        </div>
                         <p></p>
                         <div>
-                            <span style="float:right;"> <strong>Uploaded On</strong> : {{post.Date|date}}</span>
+                            <span style="float:right;"> <strong>Updated On</strong> : {{post.Date|date}}</span>
                         </div>
                     </div>
-                    
+
 
 
 

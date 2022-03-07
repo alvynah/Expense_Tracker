@@ -164,7 +164,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-LOGIN_REDIRECT_URL = 'welcome'
+LOGIN_REDIRECT_URL = 'addmoney_submission'
 
 KSH = moneyed.add_currency(
     code='KSH',

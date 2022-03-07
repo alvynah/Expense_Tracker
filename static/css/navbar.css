@@ -11,7 +11,7 @@
         position: relative;
         justify-content: space-between;
         align-items: center;
-        height: 70px;
+        height: 40px;
         border-bottom: 1px solid #E6EAEA;
         margin-right: 3px;
         margin-left: 3px;
@@ -34,12 +34,15 @@
     #header {
         position: relative;
         top: 0;
-        height: 30px;
+        height: 40px;
         line-height: 73px;
-        font-size: 13px;
         font-weight: 400;
         background-color: #f4f7f6;
         justify-content: flex-end;
+    }
+    
+    .container {
+        background-color: rgb(255, 255, 255, 0.8)
     }
     
     header {
