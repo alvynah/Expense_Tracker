@@ -53,8 +53,35 @@ class Expense(models.Model):
     Date = models.DateField(auto_now_add = True)
 
     Category = models.ForeignKey(category, on_delete=models.CASCADE,blank=True)
+    
     def __str__(self):
-     return f'{self.user.username} Profile'
-#     class Meta:
-#         db_table:'expense'
-	
+        return f'{self.user.username} Profile'
+
+    def save_expense(self):
+        self.save()
+
+    def delete_expense(self):
+        self.delete()
+
+    @classmethod
+    def search_expense(cls,search_term):
+        expenses= cls.objects.filter(Category__name__icontains=search_term).all()
+        return expenses
+
+    @classmethod
+    def all_expensess(cls):
+        return cls.objects.all()
+
+    @classmethod
+    def get_expense_by_id(cls,id):
+        expense=Expense.objects.filter(id=id)
+        return expense
+
+    class Meta:
+        '''
+        Class method to display images by date published
+        '''
+        ordering = ["-pk"]
+
+
+ 

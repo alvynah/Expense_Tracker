@@ -8,6 +8,9 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('', views.welcome, name='welcome'),
     path('profile/<username>/', views.profile, name='profile'),
+    path('addmoney_submission/',views.addmoney_submission,name='addmoney_submission'),
+    re_path(r'^search/', views.search_project,name='search_results'),
+
 
 
 ]

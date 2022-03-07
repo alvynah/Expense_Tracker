@@ -21,3 +21,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('name','bio' ,'prof_pic')
+
+class UpdateExpenseForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ( 'add_money','Category',"quantity")

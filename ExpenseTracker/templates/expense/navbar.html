@@ -4,9 +4,19 @@
 <header id="header">
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <hr>
-        <a href="/">Home</a>
         <hr> {%if user.is_authenticated %}
+        <a href="/">Dashboard</a>
+        <hr>
+        <a>Expense</a>
+        <hr>
+        <a>Category of Expenses</a>
+        <hr>
+        <a>History</a>
+        <hr>
+        <a>Summary/Analytics</a>
+
+        <hr>
+
         <a href="/logout">Log Out</a>
         <hr> {%endif%}
     </div>
@@ -17,6 +27,17 @@
             <span classpan style="cursor:pointer;font-size:20px;font-weight:bold;" onclick="openNav()">&#9776; Menu</span>
         </div>
         <div class="box-center2">
+            <form class="mb-0" id="searchform" action="{% url 'search_results' %}" role="search">
+
+                <div class="input-group">
+
+                    <input class="form-control border-right-0  border text-center" type="search" placeholder="search category" id="searching" name="search_project">
+                    <button class=" bg-transparent btn-sm mt-2 border-left-0 border-top-0" type="submit">
+                            <i class="fa fa-search" style="font-size:20px"></i>
+                        </button>
+
+                </div>
+            </form>
             <a href="/">
                 <h1 class="slogan awwards">expenseT.</h1>
 
@@ -25,7 +46,6 @@
         </div>
         {% if user.is_authenticated %}
         <div>
-            </a>
             <a href=" {%url 'profile' user.username %}">
                 <img src="{{user.profile.prof_pic.url}}" style="width:50px;height:50px;" alt="none" class="rounded-circle border">
                 <span class="text-muted" style="font-weight:bold;font-size: 20px;">{{user.username}}</span>

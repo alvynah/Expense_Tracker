@@ -6,6 +6,13 @@ from .forms import *
 from .models import *
 from django.http import HttpResponseRedirect
 from .email import send_welcome_email
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage , PageNotAnInteger
+from django.db.models import Sum
+from django.http import JsonResponse
+import datetime
+from django.utils import timezone
 
 # Create your views here.
 
@@ -72,13 +79,38 @@ def profile(request, username):
 def welcome(request):
    users = User.objects.exclude(id=request.user.id)
    profiles = Profile.objects.all()
+   expenses = Expense.objects.all()
    
 
    params = {
        'users': users,
        'profiles': profiles,
+       'expenses':expenses,
       
    }
    return render(request, 'expense/index.html', params)
 
+@login_required
+def addmoney_submission(request):
+    if request.method == 'POST':
+        form = UpdateExpenseForm(request.POST)
+        if form.is_valid():
+           expense = form.save(commit=False)
+           expense.user = request.user
+           expense.save()
+           return redirect('welcome')
+    else:
+        form = UpdateExpenseForm()
+    return render (request,'expense/expense.html', {'form':form})
+
+@login_required
+def search_project(request):
+       if 'search_project' in request.GET and request.GET["search_project"]:
+         Category = request.GET.get("search_project")
+         searched_projects = Expense.search_expense(Category)
+         message = f"{Category}"
+         return render(request, 'expense/search_results.html', {'message':message,'results': searched_projects})
+       else:
+        message = "You haven't searched for any Expense"
+       return render(request, 'expense/search_results.html', {'message': message})
 

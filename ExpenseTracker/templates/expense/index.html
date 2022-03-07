@@ -1,13 +1,35 @@
 <div id="main">
 
     {% extends 'expense/base.html' %}{%load crispy_forms_tags%} {% block content %}{{block.super}}
-
-
-    <div class="expenseBody">
-        <p>Slay</p>
+<div  style="margin-top:5%">
+        {% if expenses %}
+<table id = "table" class = "table table-bordered">
+        <thead class = "alert-success">
+            <tr>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in expenses %}
+            <tr>
+                <td>{{ post.Add_name }}</td>
+                <td>{{ post.Category.name }}</td>
+                <td>{{ post.quantity }}</td>
+                <td>{{ post.Date|date }}</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+           {% endfor %}
+        </tbody>
+    </table>
     </div>
 
-
+{%endif%}
 
 </div>
 {%endblock%}

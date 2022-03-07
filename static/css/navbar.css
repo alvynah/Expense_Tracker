@@ -109,11 +109,6 @@
         z-index: 1;
         top: 0;
         left: 0;
-        background-image: url(/static/images/loginwallpaper.jpg);
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
@@ -126,6 +121,8 @@
         font-weight: 800 !important;
         display: block;
         transition: 0.3s;
+        height: 50px;
+        font-size: 12px;
     }
     
     .sidenav a:hover {
