@@ -49,7 +49,9 @@ This is a Django web application.It is a simple Expense Tracker that illustrates
 
 
 
-
+##Bugs
+### Currency
+1. Only works with Kenyan shillings
 
 
 
