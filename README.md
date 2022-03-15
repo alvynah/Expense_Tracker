@@ -95,4 +95,4 @@ For any further inquiries or contributions or comments, reach me at [Alvynah](ju
 ### License
 [MIT License](https://github.com/alvynah/Expense_Tracker/blob/main/License)
 
-Copyright (c) 2021 **Alvynah Wabwoba**
+Copyright (c) 2022 **Alvynah Wabwoba**
