@@ -93,6 +93,6 @@ This is a Django web application.It is a simple Expense Tracker that illustrates
 ## Contact Information
 For any further inquiries or contributions or comments, reach me at [Alvynah](juvatalvynah@gmail.com)
 ### License
-[MIT License](https://github.com/alvynah/Expense_Tracker/blob/main/License)
+[MIT License](https://github.com/alvynah/Expense_Tracker/blob/master/License)
 
 Copyright (c) 2022 **Alvynah Wabwoba**
