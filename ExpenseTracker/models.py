@@ -94,6 +94,6 @@ class Expense(models.Model):
 
     class Meta:
         '''
-        Class method to display images by date published
+        Class method to display Expenses by date published
         '''
         ordering = ["-pk"]
