@@ -1,7 +1,11 @@
 from django.urls import path,re_path
 from django.conf import settings
+
+from Expense.settings import STATICFILES_STORAGE
 from . import views
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
+from django.conf import settings
 
 
 urlpatterns = [
@@ -16,7 +20,9 @@ urlpatterns = [
     path('pie-chartExpense/', views.pie_chartExpense, name='pie-chart'),
 
     re_path(r'^search/', views.search_project,name='search_results'),
-
+    path("favicon.ico", RedirectView.as_view(url='/static/favicon.ico', permanent=True),
+    ),
+   
 
 
 ]
